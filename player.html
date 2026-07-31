@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag.js?id=G-P8WT456TS4"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-P8WT456TS4');
-    </script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R4JE26SQJ6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-R4JE26SQJ6');
+</script>
+<meta name="b9cb5761d2d9e9ece14d08f153766caef984e25c" content="b9cb5761d2d9e9ece14d08f153766caef984e25c" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Player</title>
+    <title>Video and Smart Link Split View</title>
     <style>
         * { box-sizing: border-box; }
         html, body {
@@ -25,10 +27,11 @@
             display: flex;
             flex-direction: column;
         }
+       
         .video-section {
             flex: 1;
             width: 100%;
-            height: 100vh;
+            height: 50vh;
             background: #000;
             display: flex;
             justify-content: center;
@@ -40,53 +43,49 @@
             object-fit: contain;
             background: #000;
         }
+    
+        .smartlink-section {
+            flex: 1;
+            width: 100%;
+            height: 50vh;
+            background: #fff;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
     </style>
 </head>
 <body>
 
-    <!-- ផ្នែកវីដេអូពេញអេក្រង់ -->
+
     <div class="video-section">
-        <video id="mainVideo" autoplay muted playsinline controls>
-            Your browser does not support the video tag.
-        </video>
+        <video id="player" controls autoplay muted playsinline></video>
+    </div>
+
+  
+    <div class="smartlink-section">
+        <iframe id="smartLinkFrame"></iframe>
     </div>
 
     <script>
-        // ១. ទាញយក URL វីដេអូពី Parameter ខាងលើ
-        const urlParams = new URLSearchParams(window.location.search);
-        const videoUrl = urlParams.get('video');
-        const videoElement = document.getElementById('mainVideo');
+const params = new URLSearchParams(window.location.search);
+const videoUrl = params.get("video");
+const player = document.getElementById("player");
+const smartLinkFrame = document.getElementById("smartLinkFrame");
+const smartLink = "https://villainoussession.com/bD3EVz0.PD3CpQvibHmeVmJPZFDr0i3/MPjOcHzKNQj/Uiz_LaT/cuy/N/zsMB2uN/Tucq";
 
-        if (videoUrl) {
-            const sourceElement = document.createElement('source');
-            sourceElement.src = videoUrl;
-            sourceElement.type = 'video/mp4';
-            videoElement.appendChild(sourceElement);
-            videoElement.load();
-        }
+if (videoUrl) {
+    player.src = videoUrl;
+    player.play().catch(error => {
+        console.log("Autoplay prevented:", error);
+    });
+} else {
+    document.querySelector('.video-section').innerHTML = "<h2 style='color:white;text-align:center;'>No Video Found</h2>";
+}
 
-        // ២. កូដ Smart Link ឱ្យលោតស្វ័យប្រវត្តិពេលវីដេអូដើរដល់ពាក់កណ្ដាល (50%)
-        const smartLinkUrl = "https://villainoussession.com/bD3EVz0.PD3CpQvibHmeVmJPZFDr0i3/MPjOcHzKNQj/Uiz_LaT/cuy/N/zsMB2uN/Tucq"; // ដាក់ Smart Link របស់អ្នកនៅទីនេះ
-        let adTriggered = false;
-
-        videoElement.addEventListener('timeupdate', function() {
-            if (!adTriggered && videoElement.duration) {
-                let halfwayPoint = videoElement.duration / 2; // កំណត់យកពាក់កណ្ដាលវីដេអូ
-                
-                // បើវីដេអូដើរដល់ឬហួសពាក់កណ្ដាល
-                if (videoElement.currentTime >= halfwayPoint) {
-                    window.open(smartLinkUrl, '_blank');
-                    adTriggered = true; // ឱ្យលោតតែម្ដងគត់ក្នុងមួយវីដេអូ
-                }
-            }
-        });
-
-        // ៣. កូដសម្រាប់ពេលវីដេអូលេងចប់ ឱ្យលោតទៅវីដេអូបន្ទាប់ស្វ័យប្រវត្តិ
-        videoElement.addEventListener('ended', function() {
-            const nextVideoLink = "https://pandalive-co-kr.online/player?video=https://cdn.videy.co/8SZ2yViE1.mp4";
-            window.location.href = nextVideoLink; 
-        });
+smartLinkFrame.src = smartLink;
     </script>
-
 </body>
 </html>
