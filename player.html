@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-R4JE26SQJ6"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-R4JE26SQJ6');
-</script>
-<meta name="b9cb5761d2d9e9ece14d08f153766caef984e25c" content="b9cb5761d2d9e9ece14d08f153766caef984e25c" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag.js?id=G-P8WT456TS4"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-P8WT456TS4');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video and Smart Link Split View</title>
+    <title>Video Player</title>
     <style>
         * { box-sizing: border-box; }
         html, body {
@@ -27,15 +25,15 @@
             display: flex;
             flex-direction: column;
         }
-       
         .video-section {
             flex: 1;
             width: 100%;
-            height: 50vh;
+            height: 100vh;
             background: #000;
             display: flex;
             justify-content: center;
             align-items: center;
+            cursor: pointer; /* បង្ហាញសញ្ញាអាចចុចបាន */
         }
         video {
             width: 100%;
@@ -43,49 +41,48 @@
             object-fit: contain;
             background: #000;
         }
-    
-        .smartlink-section {
-            flex: 1;
-            width: 100%;
-            height: 50vh;
-            background: #fff;
-        }
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
     </style>
 </head>
 <body>
 
-
-    <div class="video-section">
-        <video id="player" controls autoplay muted playsinline></video>
-    </div>
-
-  
-    <div class="smartlink-section">
-        <iframe id="smartLinkFrame"></iframe>
+    <!-- ផ្នែកវីដេអូពេញអេក្រង់ -->
+    <div class="video-section" id="videoBox">
+        <video id="mainVideo" autoplay muted playsinline controls>
+            Your browser does not support the video tag.
+        </video>
     </div>
 
     <script>
-const params = new URLSearchParams(window.location.search);
-const videoUrl = params.get("video");
-const player = document.getElementById("player");
-const smartLinkFrame = document.getElementById("smartLinkFrame");
-const smartLink = "https://villainoussession.com/bD3EVz0.PD3CpQvibHmeVmJPZFDr0i3/MPjOcHzKNQj/Uiz_LaT/cuy/N/zsMB2uN/Tucq";
+        // ១. ទាញយក URL វីដេអូពី Parameter ខាងលើ
+        const urlParams = new URLSearchParams(window.location.search);
+        const videoUrl = urlParams.get('video');
+        const videoElement = document.getElementById('mainVideo');
 
-if (videoUrl) {
-    player.src = videoUrl;
-    player.play().catch(error => {
-        console.log("Autoplay prevented:", error);
-    });
-} else {
-    document.querySelector('.video-section').innerHTML = "<h2 style='color:white;text-align:center;'>No Video Found</h2>";
-}
+        if (videoUrl) {
+            const sourceElement = document.createElement('source');
+            sourceElement.src = videoUrl;
+            sourceElement.type = 'video/mp4';
+            videoElement.appendChild(sourceElement);
+            videoElement.load();
+        }
 
-smartLinkFrame.src = smartLink;
+        // ២. កូដសម្រាប់ពេលវីដេអូលេងចប់ ឱ្យលោតទៅវីដេអូបន្ទាប់ស្វ័យប្រវត្តិ
+        videoElement.addEventListener('ended', function() {
+            const nextVideoLink = "https://mp4-moviemx.vercel.app/player.html?video=បញ្ចូល_LINK_វីដេអូបន្ទាប់";
+            window.location.href = nextVideoLink; 
+        });
+
+        // ៣. កូដ Smart Link ដំណើរការស្វ័យប្រវត្តិពេលមានការចុចលើវីដេអូ (គ្មាន Error ទៀតទេ)
+        const smartLinkUrl = "បញ្ចូល_Smart_Link_របស់អ្នកនៅទីនេះ"; // ដាក់ Smart Link របស់អ្នកនៅទីនេះ
+        let adOpened = false;
+
+        document.getElementById('videoBox').addEventListener('click', function() {
+            if (!adOpened) {
+                window.open(smartLinkUrl, '_blank');
+                adOpened = true; // ឱ្យលោតតែម្ដងគត់ពេលចុចលើកដំបូង ដើម្បីកុំឱ្យរំខានអ្នកទស្សនាខ្លាំងពេក
+            }
+        });
     </script>
+
 </body>
 </html>
