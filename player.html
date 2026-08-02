@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-R4JE26SQJ6"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-R4JE26SQJ6');
-</script>
-<meta name="b9cb5761d2d9e9ece14d08f153766caef984e25c" content="b9cb5761d2d9e9ece14d08f153766caef984e25c" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="b9cb5761d2d9e9ece14d08f153766caef984e25c" content="b9cb5761d2d9e9ece14d08f153766caef984e25c" />
     <title>Video and Smart Link Split View</title>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-R4JE26SQJ6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-R4JE26SQJ6');
+    </script>
+
     <style>
         * { box-sizing: border-box; }
         html, body {
@@ -24,14 +25,16 @@
             background: #000;
             overflow: hidden;
             font-family: sans-serif;
+        }
+        body {
             display: flex;
             flex-direction: column;
         }
-       
+
         .video-section {
-            flex: 1;
+            flex: 1 1 50%;
+            min-height: 0;
             width: 100%;
-            height: 50vh;
             background: #000;
             display: flex;
             justify-content: center;
@@ -43,48 +46,95 @@
             object-fit: contain;
             background: #000;
         }
-    
+        .no-video {
+            color: #fff;
+            text-align: center;
+            padding: 0 16px;
+        }
+
         .smartlink-section {
-            flex: 1;
+            flex: 1 1 50%;
+            min-height: 0;
             width: 100%;
-            height: 50vh;
             background: #fff;
+            position: relative;
+            display: flex;
+            flex-direction: column;
         }
         iframe {
+            flex: 1;
             width: 100%;
-            height: 100%;
             border: none;
+        }
+        .smartlink-fallback {
+            display: none;
+            padding: 10px;
+            text-align: center;
+            font-size: 14px;
+            background: #f2f2f2;
+            border-top: 1px solid #ddd;
+        }
+        .smartlink-fallback a {
+            color: #06c;
+            text-decoration: none;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-
-    <div class="video-section">
-        <video id="player" controls autoplay muted playsinline></video>
+    <div class="video-section" id="videoSection">
+        <video id="player" controls autoplay muted playsinline webkit-playsinline="true"></video>
     </div>
 
-  
     <div class="smartlink-section">
-        <iframe id="smartLinkFrame"></iframe>
+        <iframe id="smartLinkFrame" title="Smart Link"></iframe>
+        <div class="smartlink-fallback" id="smartLinkFallback">
+            Having trouble viewing this?
+            <a id="smartLinkFallbackLink" href="#" target="_blank" rel="noopener noreferrer">Open link in a new tab</a>
+        </div>
     </div>
 
     <script>
-const params = new URLSearchParams(window.location.search);
-const videoUrl = params.get("video");
-const player = document.getElementById("player");
-const smartLinkFrame = document.getElementById("smartLinkFrame");
-const smartLink = "https://s.pemsrv.com/v1/link.php?cat=&idzone=5991674&type=8";
+        const params = new URLSearchParams(window.location.search);
+        const rawVideoUrl = params.get("video");
+        const player = document.getElementById("player");
+        const videoSection = document.getElementById("videoSection");
+        const smartLinkFrame = document.getElementById("smartLinkFrame");
+        const smartLinkFallback = document.getElementById("smartLinkFallback");
+        const smartLinkFallbackLink = document.getElementById("smartLinkFallbackLink");
+        const smartLink = "https://s.pemsrv.com/v1/link.php?cat=&idzone=5991674&type=8";
 
-if (videoUrl) {
-    player.src = videoUrl;
-    player.play().catch(error => {
-        console.log("Autoplay prevented:", error);
-    });
-} else {
-    document.querySelector('.video-section').innerHTML = "<h2 style='color:white;text-align:center;'>No Video Found</h2>";
-}
+        function showNoVideo(message) {
+            videoSection.innerHTML = `<div class="no-video"><h2>${message}</h2></div>`;
+        }
 
-smartLinkFrame.src = smartLink;
+        if (rawVideoUrl) {
+            let videoUrl;
+            try {
+                videoUrl = decodeURIComponent(rawVideoUrl);
+            } catch (e) {
+                videoUrl = rawVideoUrl;
+            }
+
+            player.src = videoUrl;
+
+            player.addEventListener("error", () => {
+                showNoVideo("Video failed to load");
+            });
+
+            player.play().catch(error => {
+                console.log("Autoplay prevented:", error);
+            });
+        } else {
+            showNoVideo("No Video Found");
+        }
+
+        // Many sites block being embedded in an iframe (X-Frame-Options / CSP).
+        // JS can't detect that failure directly for a cross-origin frame, so
+        // always show a visible fallback link the user can click instead.
+        smartLinkFrame.src = smartLink;
+        smartLinkFallbackLink.href = smartLink;
+        smartLinkFallback.style.display = "block";
     </script>
 </body>
 </html>
