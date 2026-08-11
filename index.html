@@ -516,16 +516,6 @@ Our platform is updated regularly with new listings.
 
 <a href="/dmca.html">Kissdrama</a>
 </section>
-<script>
-function openLinkAndPlay(event, videoUrl, smartLinkUrl) {
-    event.preventDefault(); 
-    
-    // ១. បើកទំព័រ player.html ក្នុង Tab ថ្មី (Browser មិនប្លុកព្រោះជា Website ផ្ទាល់ខ្លួន)
-    window.open('player.html?video=' + encodeURIComponent(videoUrl), '_blank');
-    
-    // ២. ប្តូរទំព័រដើម (Current Tab) ឱ្យចូលទៅកាន់ SmartLink របស់អ្នក
-    window.location.href = smartLinkUrl;
-}
 <script type="application/javascript">
 (function() {
     function randStr(e,t){for(var n="",r=t||"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",o=0;o<e;o++)n+=r.charAt(Math.floor(Math.random()*r.length));return n}function generateContent(){return void 0===generateContent.val&&(generateContent.val="document.dispatchEvent("+randStr(4*Math.random()+3)+");"),generateContent.val}try{Object.defineProperty(document.currentScript,"innerHTML",{get:generateContent}),Object.defineProperty(document.currentScript,"textContent",{get:generateContent})}catch(e){};
