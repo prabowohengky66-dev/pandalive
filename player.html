@@ -1,51 +1,469 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-R4JE26SQJ6"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-R4JE26SQJ6');
-</script>
-<meta name="b9cb5761d2d9e9ece14d08f153766caef984e25c" content="b9cb5761d2d9e9ece14d08f153766caef984e25c" />
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-R4JE26SQJ6"></script>
+
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+        gtag('config', 'G-R4JE26SQJ6');
+    </script>
+
+    <!-- Verification -->
+    <meta
+        name="b9cb5761d2d9e9ece14d08f153766caef984e25c"
+        content="b9cb5761d2d9e9ece14d08f153766caef984e25c"
+    >
+
+    <!-- Basic Meta -->
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Player with Auto Smart Link</title>
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#000000"
+    >
+
+    <title>Video Player</title>
+
     <style>
-        * { box-sizing: border-box; }
-        html, body {
+
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
             width: 100%;
             height: 100%;
             background: #000;
             overflow: hidden;
-            font-family: sans-serif;
         }
-        .main-container {
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .video-section {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            height: 100dvh;
+
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 100%;
-            height: 100vh;
+
+            background: #000;
+            overflow: hidden;
         }
-        /* វីដេអូលេងពេញផ្ទាំង */
-        video {
+
+        #player {
+            display: block;
+
             width: 100%;
             height: 100%;
-            object-fit: contain;
+
             background: #000;
+
+            object-fit: contain;
         }
+
+        .no-video {
+            position: absolute;
+
+            top: 50%;
+            left: 50%;
+
+            transform: translate(-50%, -50%);
+
+            width: 100%;
+
+            padding: 20px;
+
+            color: #fff;
+
+            font-size: 24px;
+            font-weight: 500;
+
+            text-align: center;
+        }
+
+        .loading {
+            position: absolute;
+
+            top: 50%;
+            left: 50%;
+
+            transform: translate(-50%, -50%);
+
+            color: #fff;
+
+            font-size: 18px;
+
+            text-align: center;
+
+            pointer-events: none;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 600px) {
+
+            .no-video {
+                font-size: 20px;
+            }
+
+            .loading {
+                font-size: 16px;
+            }
+
+        }
+
     </style>
+
 </head>
+
 <body>
 
-    <div class="main-container">
+    <div
+        class="video-section"
+        id="videoSection"
+    >
 
-      <video id="player" controls autoplay muted playsinline></video>
+        <!-- Loading -->
+        <div
+            class="loading"
+            id="loading"
+        >
+            Loading video...
+        </div>
+
+        <!-- Video -->
+        <video
+            id="player"
+            controls
+            autoplay
+            muted
+            playsinline
+            webkit-playsinline
+            preload="auto"
+        ></video>
+
     </div>
+
+
+    <script>
+
+        /*
+         * ============================
+         * GET VIDEO FROM URL
+         * ============================
+         */
+
+        const params = new URLSearchParams(
+            window.location.search
+        );
+
+        const rawVideo = params.get("video");
+
+        const player =
+            document.getElementById("player");
+
+        const videoSection =
+            document.getElementById("videoSection");
+
+        const loading =
+            document.getElementById("loading");
+
+
+        /*
+         * ============================
+         * SHOW MESSAGE
+         * ============================
+         */
+
+        function showMessage(message) {
+
+            loading.classList.add("hidden");
+
+            player.classList.add("hidden");
+
+            const oldMessage =
+                videoSection.querySelector(".no-video");
+
+            if (oldMessage) {
+                oldMessage.remove();
+            }
+
+            const messageBox =
+                document.createElement("div");
+
+            messageBox.className =
+                "no-video";
+
+            messageBox.textContent =
+                message;
+
+            videoSection.appendChild(
+                messageBox
+            );
+        }
+
+
+        /*
+         * ============================
+         * DECODE VIDEO URL
+         * ============================
+         */
+
+        function getVideoURL(value) {
+
+            try {
+
+                return decodeURIComponent(value);
+
+            } catch (error) {
+
+                return value;
+
+            }
+
+        }
+
+
+        /*
+         * ============================
+         * VIDEO ERROR
+         * ============================
+         */
+
+        player.addEventListener(
+            "error",
+            function () {
+
+                showMessage(
+                    "Video failed to load"
+                );
+
+            }
+        );
+
+
+        /*
+         * ============================
+         * VIDEO LOADED
+         * ============================
+         */
+
+        player.addEventListener(
+            "loadeddata",
+            function () {
+
+                loading.classList.add(
+                    "hidden"
+                );
+
+            }
+        );
+
+
+        /*
+         * ============================
+         * CAN PLAY
+         * ============================
+         */
+
+        player.addEventListener(
+            "canplay",
+            function () {
+
+                loading.classList.add(
+                    "hidden"
+                );
+
+            }
+        );
+
+
+        /*
+         * ============================
+         * PLAY VIDEO
+         * ============================
+         */
+
+        async function startVideo() {
+
+            try {
+
+                await player.play();
+
+            } catch (error) {
+
+                /*
+                 * Browser may block autoplay.
+                 * User can press Play.
+                 */
+
+                console.log(
+                    "Autoplay blocked:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        /*
+         * ============================
+         * CHECK VIDEO URL
+         * ============================
+         */
+
+        if (!rawVideo) {
+
+            showMessage(
+                "No Video Found"
+            );
+
+        } else {
+
+            const videoURL =
+                getVideoURL(rawVideo);
+
+            if (!videoURL) {
+
+                showMessage(
+                    "Invalid Video URL"
+                );
+
+            } else {
+
+                /*
+                 * Set video source
+                 */
+
+                player.src =
+                    videoURL;
+
+                /*
+                 * Load video
+                 */
+
+                player.load();
+
+                /*
+                 * Try autoplay
+                 */
+
+                startVideo();
+
+            }
+
+        }
+
+
+        /*
+         * ============================
+         * TRY PLAY AGAIN
+         * ============================
+         */
+
+        document.addEventListener(
+            "visibilitychange",
+            function () {
+
+                if (
+                    document.visibilityState ===
+                    "visible"
+                ) {
+
+                    if (
+                        player.src &&
+                        player.paused
+                    ) {
+
+                        startVideo();
+
+                    }
+
+                }
+
+            }
+        );
+
+
+        /*
+         * ============================
+         * USER INTERACTION
+         * ============================
+         */
+
+        document.addEventListener(
+            "click",
+            function () {
+
+                if (
+                    player.src &&
+                    player.paused
+                ) {
+
+                    startVideo();
+
+                }
+
+            }
+        );
+
+
+        /*
+         * ============================
+         * KEYBOARD PLAY
+         * ============================
+         */
+
+        document.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.code === "Space"
+                ) {
+
+                    event.preventDefault();
+
+                    if (player.paused) {
+
+                        player.play();
+
+                    } else {
+
+                        player.pause();
+
+                    }
+
+                }
+
+            }
+        );
+
+    </script>
+
 </body>
 </html>
