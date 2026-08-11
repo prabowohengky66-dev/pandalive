@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
+  <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-R4JE26SQJ6"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -11,95 +11,58 @@
   gtag('config', 'G-R4JE26SQJ6');
 </script>
 <meta name="b9cb5761d2d9e9ece14d08f153766caef984e25c" content="b9cb5761d2d9e9ece14d08f153766caef984e25c" />
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Video Player</title>
-
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-html,body{
-    width:100%;
-    height:100%;
-    background:#000;
-    overflow:hidden;
-}
-
-.video-section{
-    width:100%;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:#000;
-}
-
-video{
-    width:100%;
-    height:100%;
-    object-fit:contain;
-}
-
-.no-video{
-    color:#fff;
-    font-size:24px;
-}
-</style>
-
+</script>>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100vh;
+            background: #000;
+            color: #fff;
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-top: 4px solid #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        p {
+            font-size: 14px;
+            color: #aaa;
+            margin: 5px 0;
+        }
+        .btn-manual {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #1da1f2;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="video-section" id="videoSection">
-    <video id="player"
-        controls
-        autoplay
-        muted
-        playsinline
-        webkit-playsinline>
-    </video>
-</div>
 
-<script>
-
-const params=new URLSearchParams(location.search);
-
-const rawVideo=params.get("video");
-
-const player=document.getElementById("player");
-
-const videoSection=document.getElementById("videoSection");
-
-function noVideo(msg){
-    videoSection.innerHTML="<div class='no-video'>"+msg+"</div>";
-}
-
-if(rawVideo){
-
-    let url;
-
-    try{
-        url=decodeURIComponent(rawVideo);
-    }catch(e){
-        url=rawVideo;
-    }
-
-    player.src=url;
-
-    player.play().catch(()=>{});
-
-    player.onerror=function(){
-        noVideo("Video failed");
-    };
-
-}else{
-
-    noVideo("No Video Found");
-
-}
 </body>
 </html>
