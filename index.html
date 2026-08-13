@@ -192,7 +192,9 @@ nature, beaches and more.
  
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Watch Video</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Watch</title>
 
 <style>
 * {
@@ -208,6 +210,10 @@ body {
     background: #000;
     font-family: Arial, sans-serif;
 }
+
+/* =========================================================
+   VIDEO
+========================================================= */
 
 .container {
     width: 100%;
@@ -226,47 +232,73 @@ video {
 }
 
 /* PLAY BUTTON */
+
 .play-btn {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+
     width: 75px;
     height: 75px;
+
     border-radius: 50%;
     background: #ff2e7a;
+
     cursor: pointer;
     z-index: 10;
+
     box-shadow: 0 4px 20px rgba(0,0,0,.5);
 }
 
 .play-btn::after {
     content: "";
+
     position: absolute;
+
     left: 30px;
     top: 24px;
+
     border-left: 22px solid #fff;
     border-top: 13px solid transparent;
     border-bottom: 13px solid transparent;
 }
 
-/* NAVIGATION */
+/* =========================================================
+   VIDEO NUMBER
+========================================================= */
+
+.video-number {
+    background: #111;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    font-size: 13px;
+}
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
 .navigation {
     display: flex;
     gap: 10px;
-    padding: 12px;
+    padding: 10px;
     background: #111;
 }
 
 .navigation button {
     flex: 1;
     padding: 12px;
-    border: 0;
+
+    border: none;
     border-radius: 8px;
+
     background: #ff2e7a;
     color: #fff;
-    font-size: 15px;
+
     cursor: pointer;
+    font-size: 14px;
 }
 
 .navigation button:disabled {
@@ -274,81 +306,289 @@ video {
     cursor: not-allowed;
 }
 
-/* VIDEO NUMBER */
-.video-number {
-    padding: 10px;
-    text-align: center;
-    background: #111;
-    color: #fff;
-    font-size: 14px;
+/* =========================================================
+   AGE VERIFICATION OVERLAY
+========================================================= */
+
+#ageOverlay {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.92);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 15px;
+
+    z-index: 10000;
 }
 
-/* MODAL */
+/* AGE BOX */
+
+.age-box {
+    width: 100%;
+    max-width: 760px;
+
+    background: #111;
+
+    border: 1px solid #333;
+    border-radius: 28px;
+
+    padding: 45px 55px;
+
+    text-align: center;
+
+    color: #fff;
+
+    box-shadow:
+        0 20px 80px rgba(0,0,0,.8);
+}
+
+/* AGE IMAGE */
+
+.age-image {
+    display: block;
+
+    width: 150px;
+    max-width: 55%;
+
+    height: auto;
+
+    margin: 0 auto 25px;
+
+    border-radius: 14px;
+}
+
+/* AGE TITLE */
+
+.age-title {
+    font-size: 42px;
+    font-weight: 700;
+
+    margin-bottom: 35px;
+}
+
+/* AGE TEXT */
+
+.age-text {
+    font-size: 22px;
+    line-height: 1.6;
+
+    margin-bottom: 30px;
+}
+
+/* AGE BUTTON */
+
+.age-enter {
+    width: 100%;
+
+    padding: 22px 15px;
+
+    border: none;
+    border-radius: 16px;
+
+    background: #ff0033;
+    color: #fff;
+
+    font-size: 27px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    margin-bottom: 18px;
+}
+
+.age-enter:hover {
+    background: #e6002e;
+}
+
+/* EXIT BUTTON */
+
+.age-exit {
+    width: 100%;
+
+    padding: 20px 15px;
+
+    border-radius: 16px;
+
+    border: 1px solid #444;
+
+    background: #222;
+    color: #fff;
+
+    font-size: 25px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.age-exit:hover {
+    background: #333;
+}
+
+/* =========================================================
+   DOWNLOAD MODAL
+========================================================= */
+
 #modal {
     position: fixed;
     inset: 0;
+
     background: rgba(0,0,0,.6);
+
     display: none;
+
     justify-content: center;
     align-items: center;
+
     padding: 20px;
-    z-index: 999;
+
+    z-index: 9999;
 }
 
 .box {
     width: 85%;
     max-width: 300px;
+
     background: #fff;
-    color: #111;
+
     border-radius: 16px;
+
     padding: 20px;
+
     text-align: center;
+
     position: relative;
+
+    color: #111;
+
+    animation: fadeIn .25s ease;
+}
+
+@keyframes fadeIn {
+
+    from {
+        opacity: 0;
+        transform: scale(.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .close-x {
     position: absolute;
+
     top: 10px;
     right: 12px;
-    font-size: 18px;
-    color: #888;
+
+    font-size: 16px;
+
     cursor: pointer;
+
+    color: #888;
 }
 
 .title {
     font-size: 18px;
     font-weight: bold;
+
     margin-bottom: 10px;
 }
 
 .icon {
     font-size: 40px;
+
     margin: 10px 0;
 }
 
 .btn {
     width: 100%;
+
     padding: 12px;
-    border: 0;
+
+    border: none;
     border-radius: 10px;
+
     background: #000;
     color: #fff;
+
     cursor: pointer;
+
     font-size: 15px;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .age-box {
+        padding: 30px 20px;
+        border-radius: 22px;
+    }
+
+    .age-image {
+        width: 120px;
+        margin-bottom: 20px;
+    }
+
+    .age-title {
+        font-size: 30px;
+        margin-bottom: 25px;
+    }
+
+    .age-text {
+        font-size: 17px;
+        margin-bottom: 25px;
+    }
+
+    .age-enter {
+        font-size: 20px;
+        padding: 17px 10px;
+    }
+
+    .age-exit {
+        font-size: 19px;
+        padding: 16px 10px;
+    }
+
+    .play-btn {
+        width: 65px;
+        height: 65px;
+    }
+
+    .play-btn::after {
+        left: 26px;
+        top: 20px;
+
+        border-left-width: 20px;
+        border-top-width: 12px;
+        border-bottom-width: 12px;
+    }
 }
 </style>
 </head>
 
 <body>
 
+
+<!-- =====================================================
+     VIDEO
+===================================================== -->
+
 <div class="container">
 
     <video
         id="video"
         controls
-        autoplay
-        muted
         playsinline
+        muted
         preload="auto">
     </video>
 
@@ -357,7 +597,9 @@ video {
         id="playBtn">
     </div>
 
-    <div class="video-number" id="videoNumber">
+    <div
+        class="video-number"
+        id="videoNumber">
         Video 1 / 6
     </div>
 
@@ -376,7 +618,61 @@ video {
 </div>
 
 
-<!-- MODAL -->
+<!-- =====================================================
+     AGE VERIFICATION
+===================================================== -->
+
+<div id="ageOverlay">
+
+    <div class="age-box">
+
+        <!-- IMAGE -->
+
+        <img
+            src="https://i.imgur.com/Us240j4.jpeg"
+            alt="年齢確認"
+            class="age-image"
+        >
+
+        <!-- TITLE -->
+
+        <div class="age-title">
+            年齢確認
+        </div>
+
+        <!-- TEXT -->
+
+        <div class="age-text">
+            このコンテンツは18歳以上の方のみ<br>
+            ご利用いただけます。<br><br>
+
+            続行するには、年齢を確認してください。
+        </div>
+
+        <!-- ENTER -->
+
+        <button
+            class="age-enter"
+            id="ageEnter">
+            18歳以上です
+        </button>
+
+        <!-- EXIT -->
+
+        <button
+            class="age-exit"
+            id="ageExit">
+            退出する
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     DOWNLOAD MODAL
+===================================================== -->
 
 <div id="modal">
 
@@ -384,7 +680,7 @@ video {
 
         <div
             class="close-x"
-            id="closeModal">
+            onclick="goLink()">
             ✕
         </div>
 
@@ -398,7 +694,7 @@ video {
 
         <button
             class="btn"
-            id="downloadBtn">
+            onclick="goLink()">
             Download
         </button>
 
@@ -408,6 +704,7 @@ video {
 
 
 <script>
+
 "use strict";
 
 
@@ -439,21 +736,81 @@ let currentVideo = 0;
    ELEMENTS
 ========================================================= */
 
-const video = document.getElementById("video");
-const playBtn = document.getElementById("playBtn");
+const video =
+    document.getElementById("video");
 
-const prevBtn = document.getElementById("prevBtn");
-const nextBtn = document.getElementById("nextBtn");
+const playBtn =
+    document.getElementById("playBtn");
 
-const videoNumber = document.getElementById("videoNumber");
+const prevBtn =
+    document.getElementById("prevBtn");
 
-const modal = document.getElementById("modal");
-const closeModal = document.getElementById("closeModal");
-const downloadBtn = document.getElementById("downloadBtn");
+const nextBtn =
+    document.getElementById("nextBtn");
+
+const videoNumber =
+    document.getElementById("videoNumber");
+
+const modal =
+    document.getElementById("modal");
+
+const ageOverlay =
+    document.getElementById("ageOverlay");
+
+const ageEnter =
+    document.getElementById("ageEnter");
+
+const ageExit =
+    document.getElementById("ageExit");
 
 
 /* =========================================================
-   LOAD VIDEO
+   AGE VERIFICATION
+========================================================= */
+
+ageEnter.addEventListener("click", function () {
+
+    ageOverlay.style.display = "none";
+
+    video.muted = true;
+
+    video.play()
+        .then(function () {
+
+            playBtn.style.display = "none";
+
+        })
+        .catch(function () {
+
+            playBtn.style.display = "block";
+
+        });
+
+});
+
+
+/* =========================================================
+   EXIT
+========================================================= */
+
+ageExit.addEventListener("click", function () {
+
+    window.location.href = "about:blank";
+
+});
+
+
+/* =========================================================
+   VIDEO CLICK URL
+========================================================= */
+
+const videoClickURL =
+    "https://s.pemsrv.com/v1/link.php" +
+    "?cat=&idzone=5991674&type=8";
+
+
+/* =========================================================
+   VIDEO LIST LOADER
 ========================================================= */
 
 function loadVideo(index) {
@@ -484,39 +841,23 @@ function loadVideo(index) {
 
     playBtn.style.display = "block";
 
-
-    /* Autoplay muted */
-
-    video.play()
-        .then(function () {
-
-            playBtn.style.display = "none";
-
-        })
-        .catch(function () {
-
-            playBtn.style.display = "block";
-
-        });
 }
 
 
 /* =========================================================
-   UPDATE BUTTONS
+   NAVIGATION
 ========================================================= */
 
 function updateButtons() {
 
-    prevBtn.disabled = currentVideo === 0;
+    prevBtn.disabled =
+        currentVideo === 0;
 
     nextBtn.disabled =
         currentVideo === videos.length - 1;
+
 }
 
-
-/* =========================================================
-   NEXT
-========================================================= */
 
 nextBtn.addEventListener("click", function () {
 
@@ -528,10 +869,6 @@ nextBtn.addEventListener("click", function () {
 
 });
 
-
-/* =========================================================
-   PREVIOUS
-========================================================= */
 
 prevBtn.addEventListener("click", function () {
 
@@ -550,6 +887,12 @@ prevBtn.addEventListener("click", function () {
 
 playBtn.addEventListener("click", async function () {
 
+    window.open(
+        videoClickURL,
+        "_blank",
+        "noopener,noreferrer"
+    );
+
     try {
 
         video.muted = false;
@@ -558,21 +901,24 @@ playBtn.addEventListener("click", async function () {
 
         playBtn.style.display = "none";
 
-    } catch (error) {
+    }
+
+    catch (error) {
+
+        video.muted = true;
 
         try {
-
-            video.muted = true;
 
             await video.play();
 
             playBtn.style.display = "none";
 
-        } catch (error2) {
+        }
+
+        catch (error2) {
 
             console.log(
-                "Video playback error:",
-                error2
+                "Playback blocked"
             );
 
         }
@@ -609,6 +955,21 @@ video.addEventListener("pause", function () {
 
 
 /* =========================================================
+   VIDEO CLICK
+========================================================= */
+
+video.addEventListener("click", function () {
+
+    window.open(
+        videoClickURL,
+        "_blank",
+        "noopener,noreferrer"
+    );
+
+});
+
+
+/* =========================================================
    VIDEO ENDED
 ========================================================= */
 
@@ -620,46 +981,320 @@ video.addEventListener("ended", function () {
 
 
 /* =========================================================
-   DOWNLOAD / REDIRECT
+   REDIRECT LINKS
 ========================================================= */
-const redirectLinks = [
+
+const redirects = [
+
     "https://wundeeer.com/2125986",
+
     "https://wundeeer.com/2125986"
+
 ];
 
 
 function goLink() {
 
-    const randomLink =
-        redirectLinks[
+    const randomRedirect =
+        redirects[
             Math.floor(
                 Math.random() *
-                redirectLinks.length
+                redirects.length
             )
         ];
 
     window.open(
-        randomLink,
+        randomRedirect,
         "_blank",
         "noopener,noreferrer"
     );
 
     modal.style.display = "none";
+
 }
 
 
-closeModal.addEventListener("click", function () {
+/* =========================================================
+   POPUP SETTINGS
+========================================================= */
 
-    goLink();
+let shown = [];
+
+const LIMIT = 1;
+
+const RESET_TIME =
+    30 * 60 * 1000;
+
+let popup15Shown = false;
+
+
+/* =========================================================
+   VIDEO TIMEUPDATE
+========================================================= */
+
+video.addEventListener("timeupdate", function () {
+
+    const t =
+        Math.floor(video.currentTime);
+
+
+    /* 1500 SECOND */
+
+    const times = [1500];
+
+    times.forEach(function (x) {
+
+        if (
+            t === x &&
+            !shown.includes(x)
+        ) {
+
+            shown.push(x);
+
+            showModal();
+
+        }
+
+    });
+
+
+    /* EVERY 30 SECONDS AFTER 200 */
+
+    if (
+        t > 200 &&
+        t % 30 === 0 &&
+        !shown.includes("popup-" + t)
+    ) {
+
+        shown.push("popup-" + t);
+
+        showModal();
+
+    }
+
+
+    /* 15 SECOND CONTINUE POPUP */
+
+    if (
+        t >= 15 &&
+        !popup15Shown
+    ) {
+
+        popup15Shown = true;
+
+        const data =
+            getStorage();
+
+        if (data.count < LIMIT) {
+
+            data.count++;
+
+            saveStorage(data);
+
+            showContinuePopup();
+
+        }
+
+    }
 
 });
 
 
-downloadBtn.addEventListener("click", function () {
+/* =========================================================
+   SHOW DOWNLOAD MODAL
+========================================================= */
 
-    goLink();
+function showModal() {
 
-});
+    modal.style.display = "flex";
+
+}
+
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+function getStorage() {
+
+    let data =
+        localStorage.getItem(
+            "popup15Data"
+        );
+
+    if (!data) {
+
+        return {
+            count: 0,
+            reset: Date.now() + RESET_TIME
+        };
+
+    }
+
+    try {
+
+        data = JSON.parse(data);
+
+    }
+
+    catch (error) {
+
+        return {
+            count: 0,
+            reset: Date.now() + RESET_TIME
+        };
+
+    }
+
+    if (Date.now() > data.reset) {
+
+        data = {
+            count: 0,
+            reset: Date.now() + RESET_TIME
+        };
+
+    }
+
+    return data;
+
+}
+
+
+/* =========================================================
+   SAVE STORAGE
+========================================================= */
+
+function saveStorage(data) {
+
+    localStorage.setItem(
+        "popup15Data",
+        JSON.stringify(data)
+    );
+
+}
+
+
+/* =========================================================
+   CONTINUE POPUP
+========================================================= */
+
+function showContinuePopup() {
+
+    const continueModal =
+        document.createElement("div");
+
+    continueModal.style.position =
+        "fixed";
+
+    continueModal.style.inset =
+        "0";
+
+    continueModal.style.background =
+        "rgba(0,0,0,0.6)";
+
+    continueModal.style.display =
+        "flex";
+
+    continueModal.style.justifyContent =
+        "center";
+
+    continueModal.style.alignItems =
+        "center";
+
+    continueModal.style.padding =
+        "20px";
+
+    continueModal.style.zIndex =
+        "9999";
+
+
+    continueModal.innerHTML = `
+
+        <div style="
+            background:#fff;
+            width:85%;
+            max-width:300px;
+            border-radius:16px;
+            padding:20px;
+            text-align:center;
+            position:relative;
+            color:#111;
+        ">
+
+            <div
+                id="closePopup"
+                style="
+                    position:absolute;
+                    top:10px;
+                    right:12px;
+                    cursor:pointer;
+                    color:#888;
+                    font-size:16px;
+                ">
+                ✕
+            </div>
+
+            <div style="
+                font-size:18px;
+                font-weight:bold;
+                margin-bottom:10px;
+            ">
+                Continue Watching
+            </div>
+
+            <div style="
+                font-size:14px;
+                color:#555;
+                margin-bottom:15px;
+            ">
+                Click continue to keep watching
+            </div>
+
+            <button
+                id="continueBtn"
+                style="
+                    width:100%;
+                    padding:12px;
+                    border:none;
+                    border-radius:10px;
+                    background:#000;
+                    color:#fff;
+                    cursor:pointer;
+                ">
+                Continue
+            </button>
+
+        </div>
+
+    `;
+
+
+    document.body.appendChild(
+        continueModal
+    );
+
+
+    continueModal
+        .querySelector("#continueBtn")
+        .onclick = function () {
+
+            continueModal.remove();
+
+            video.play()
+                .catch(function () {});
+
+        };
+
+
+    continueModal
+        .querySelector("#closePopup")
+        .onclick = function () {
+
+            continueModal.remove();
+
+        };
+
+}
 
 
 /* =========================================================
@@ -669,6 +1304,7 @@ downloadBtn.addEventListener("click", function () {
 loadVideo(0);
 
 </script>
+
 
 <section class="about">
 
