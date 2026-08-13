@@ -152,6 +152,17 @@ text-decoration:none;
 }
 
 <center>
+
+/* =========================================================
+   JAPANESE VIDEO CLICK POPUP
+========================================================= */
+#videoPopup{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;justify-content:center;align-items:center;padding:20px;z-index:10001}
+.video-popup-box{width:90%;max-width:350px;background:#fff;border-radius:18px;padding:25px 20px;text-align:center;position:relative;color:#111;animation:popupIn .25s ease}
+@keyframes popupIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+.video-popup-close{position:absolute;top:8px;right:12px;font-size:22px;color:#888;cursor:pointer}
+.video-popup-title{font-size:20px;font-weight:bold;margin-bottom:12px}
+.video-popup-text{font-size:14px;color:#555;line-height:1.6;margin-bottom:18px}
+.video-popup-btn{width:100%;padding:13px;border:none;border-radius:10px;background:#ff2e7a;color:#fff;font-size:16px;font-weight:bold;cursor:pointer}
 </style>
 <script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script> 
  <ins class="eas6a97888e2" data-zoneid="5984314"></ins> 
@@ -703,6 +714,20 @@ video {
 </div>
 
 
+
+
+<!-- =====================================================
+     JAPANESE VIDEO CLICK POPUP
+===================================================== -->
+<div id="videoPopup" aria-hidden="true">
+    <div class="video-popup-box" role="dialog" aria-modal="true">
+        <div class="video-popup-close" id="videoPopupClose" aria-label="閉じる">✕</div>
+        <div class="video-popup-title">動画を続けて見る</div>
+        <div class="video-popup-text">続きの動画を見るには「続ける」をクリックしてください。</div>
+        <button class="video-popup-btn" id="videoPopupContinue">続ける</button>
+    </div>
+</div>
+
 <script>
 
 "use strict";
@@ -885,46 +910,9 @@ prevBtn.addEventListener("click", function () {
    PLAY BUTTON
 ========================================================= */
 
-playBtn.addEventListener("click", async function () {
-
-    window.open(
-        videoClickURL,
-        "_blank",
-        "noopener,noreferrer"
-    );
-
-    try {
-
-        video.muted = false;
-
-        await video.play();
-
-        playBtn.style.display = "none";
-
-    }
-
-    catch (error) {
-
-        video.muted = true;
-
-        try {
-
-            await video.play();
-
-            playBtn.style.display = "none";
-
-        }
-
-        catch (error2) {
-
-            console.log(
-                "Playback blocked"
-            );
-
-        }
-
-    }
-
+playBtn.addEventListener("click", function () {
+    videoPopup.style.display = "flex";
+    videoPopup.setAttribute("aria-hidden", "false");
 });
 
 
@@ -958,14 +946,25 @@ video.addEventListener("pause", function () {
    VIDEO CLICK
 ========================================================= */
 
+const videoPopup = document.getElementById("videoPopup");
+const videoPopupClose = document.getElementById("videoPopupClose");
+const videoPopupContinue = document.getElementById("videoPopupContinue");
+
 video.addEventListener("click", function () {
+    videoPopup.style.display = "flex";
+    videoPopup.setAttribute("aria-hidden", "false");
+});
 
-    window.open(
-        videoClickURL,
-        "_blank",
-        "noopener,noreferrer"
-    );
+videoPopupClose.addEventListener("click", function () {
+    videoPopup.style.display = "none";
+    videoPopup.setAttribute("aria-hidden", "true");
+});
 
+videoPopupContinue.addEventListener("click", function () {
+    videoPopup.style.display = "none";
+    videoPopup.setAttribute("aria-hidden", "true");
+    window.open(videoClickURL, "_blank", "noopener,noreferrer");
+    video.play().catch(function () {});
 });
 
 
