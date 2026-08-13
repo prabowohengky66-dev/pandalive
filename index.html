@@ -1,1038 +1,400 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-R4JE26SQJ6"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-R4JE26SQJ6');
-</script>
-<meta name="6a97888e-site-verification" content="2f06dd2dcb330c692e3aba28c921abdf">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GoFlie - Trending Live Cameras</title>
-
-<meta name="description" content="Watch trending public live cameras from around the world. Explore city, beach, street and travel live streams.">
-
-<style>
-
-body{
-margin:0;
-font-family:Arial,sans-serif;
-background:#111;
-color:white;
-}
-
-header{
-background:#000;
-padding:18px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-
-.logo{
-font-size:28px;
-font-weight:bold;
-color:#00d4ff;
-}
-
-nav a{
-color:white;
-margin:15px;
-text-decoration:none;
-}
-
-.hero{
-padding:70px 20px;
-text-align:center;
-background:#181818;
-}
-
-.hero h1{
-font-size:48px;
-}
-
-.hero p{
-max-width:700px;
-margin:auto;
-font-size:18px;
-color:#bbb;
-}
-
-.button{
-display:inline-block;
-margin-top:25px;
-padding:15px 35px;
-background:#00d4ff;
-color:black;
-text-decoration:none;
-border-radius:6px;
-font-weight:bold;
-}
-
-.grid{
-
-display:grid;
-
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-
-gap:20px;
-
-padding:40px;
-
-}
-
-.card{
-
-background:#222;
-
-border-radius:10px;
-
-overflow:hidden;
-
-}
-
-.card img{
-
-width:100%;
-
-height:200px;
-
-object-fit:cover;
-
-}
-
-.card h3{
-
-padding:10px;
-
-margin:0;
-
-}
-
-.card p{
-
-padding:0 10px 15px;
-
-color:#aaa;
-
-}
-
-.about{
-
-padding:50px;
-
-line-height:1.8;
-
-}
-
-footer{
-
-background:#000;
-
-padding:25px;
-
-text-align:center;
-
-}
-
-footer a{
-
-color:#ccc;
-
-margin:10px;
-
-text-decoration:none;
-
-}
-
-<center>
-</style>
-<script async type="application/javascript" src="https://a.magsrv.com/ad-provider.js"></script> 
- <ins class="eas6a97888e2" data-zoneid="5984314"></ins> 
- <script>(AdProvider = window.AdProvider || []).push({"serve": {}});</script>
-</center>
-<header>
-<div class="logo">GoFlie</div>
-
-<nav>
-
-<a href="/">Home</a>
-<a href="/about.html">About</a>
-<a href="/privacy.html">Privacy</a>
-<a href="/terms.html">Terms</a>
-<a href="/2257.html">2257 Compliance</a>
-<a href="/dmca.html">DMCA</a>
-<a href="/contact.html">Contact</a>
-
-</nav>
-
-</header>
-
-<section class="hero">
-
-<h1>Trending Live Cameras</h1>
-
-<p>
-
-Watch publicly available live cameras from around the world.
-
-Discover popular city cameras, travel destinations,
-
-nature, beaches and more.
-
-</p>
-
-<a class="button" href="#cams">Browse Cameras</a>
- 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Watch</title>
+<meta name="description" content="Watch trending public live cameras from around the world.">
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*{box-sizing:border-box}
+html,body{margin:0;background:#111;color:#fff;font-family:Arial,sans-serif}
+header{background:#000;padding:18px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:28px;font-weight:bold;color:#00d4ff}
+nav a{color:#fff;margin:15px;text-decoration:none}
+.hero{padding:70px 20px;text-align:center;background:#181818}
+.hero h1{font-size:48px}
+.hero p{max-width:700px;margin:auto;font-size:18px;color:#bbb}
+.button{display:inline-block;margin-top:25px;padding:15px 35px;background:#00d4ff;color:#000;text-decoration:none;border-radius:6px;font-weight:bold}
+.about{padding:50px;line-height:1.8}
+footer{background:#000;padding:25px;text-align:center}
+footer a{color:#ccc;margin:10px;text-decoration:none}
+
+.container{width:100%;max-width:600px;margin:0 auto;position:relative;background:#000}
+video{display:block;width:100%;height:auto;max-height:100vh;background:#000}
+
+.video-number{background:#111;color:#fff;text-align:center;padding:10px;font-size:13px}
+.navigation{display:flex;gap:10px;padding:10px;background:#111}
+.navigation button{flex:1;padding:12px;border:0;border-radius:8px;background:#ff2e7a;color:#fff;cursor:pointer;font-size:14px}
+.navigation button:disabled{background:#444;cursor:not-allowed}
+
+/* Japanese video popup */
+#videoPopup,#modal{
+    position:fixed;inset:0;background:rgba(0,0,0,.75);
+    display:none;justify-content:center;align-items:center;
+    padding:20px;z-index:10000;
+}
+.video-popup-box,.box{
+    width:90%;max-width:350px;background:#fff;color:#111;
+    border-radius:18px;padding:25px 20px;text-align:center;
+    position:relative;animation:fadeIn .25s ease;
+}
+.video-popup-close,.close-x{
+    position:absolute;top:8px;right:12px;font-size:22px;color:#888;cursor:pointer
+}
+.video-popup-title,.title{font-size:20px;font-weight:bold;margin-bottom:12px}
+.video-popup-text{font-size:14px;color:#555;line-height:1.6;margin-bottom:18px}
+.video-popup-btn,.btn{
+    width:100%;padding:13px;border:0;border-radius:10px;
+    background:#ff2e7a;color:#fff;font-size:16px;font-weight:bold;cursor:pointer
+}
+.icon{font-size:40px;margin:10px 0}
+
+@keyframes fadeIn{
+    from{opacity:0;transform:scale(.9)}
+    to{opacity:1;transform:scale(1)}
 }
 
-html,
-body {
-    width: 100%;
-    min-height: 100%;
-    background: #000;
-    font-family: Arial, sans-serif;
-}
-
-/* =========================================================
-   VIDEO
-========================================================= */
-
-.container {
-    width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    position: relative;
-    background: #000;
-}
-
-video {
-    display: block;
-    width: 100%;
-    height: auto;
-    max-height: 100vh;
-    background: #000;
-}
-
-/* PLAY BUTTON */
-
-.play-btn {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    width: 75px;
-    height: 75px;
-
-    border-radius: 50%;
-    background: #ff2e7a;
-
-    cursor: pointer;
-    z-index: 10;
-
-    box-shadow: 0 4px 20px rgba(0,0,0,.5);
-}
-
-.play-btn::after {
-    content: "";
-
-    position: absolute;
-
-    left: 30px;
-    top: 24px;
-
-    border-left: 22px solid #fff;
-    border-top: 13px solid transparent;
-    border-bottom: 13px solid transparent;
-}
-
-/* =========================================================
-   VIDEO NUMBER
-========================================================= */
-
-.video-number {
-    background: #111;
-    color: #fff;
-    text-align: center;
-    padding: 10px;
-    font-size: 13px;
-}
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-.navigation {
-    display: flex;
-    gap: 10px;
-    padding: 10px;
-    background: #111;
-}
-
-.navigation button {
-    flex: 1;
-    padding: 12px;
-
-    border: none;
-    border-radius: 8px;
-
-    background: #ff2e7a;
-    color: #fff;
-
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.navigation button:disabled {
-    background: #444;
-    cursor: not-allowed;
-}
-
-/* =========================================================
-   DOWNLOAD MODAL
-========================================================= */
-
-#modal {
-    position: fixed;
-    inset: 0;
-
-    background: rgba(0,0,0,.6);
-
-    display: none;
-
-    justify-content: center;
-    align-items: center;
-
-    padding: 20px;
-
-    z-index: 9999;
-}
-
-.box {
-    width: 85%;
-    max-width: 300px;
-
-    background: #fff;
-
-    border-radius: 16px;
-
-    padding: 20px;
-
-    text-align: center;
-
-    position: relative;
-
-    color: #111;
-
-    animation: fadeIn .25s ease;
-}
-
-@keyframes fadeIn {
-
-    from {
-        opacity: 0;
-        transform: scale(.9);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-.close-x {
-    position: absolute;
-
-    top: 10px;
-    right: 12px;
-
-    font-size: 16px;
-
-    cursor: pointer;
-
-    color: #888;
-}
-
-.title {
-    font-size: 18px;
-    font-weight: bold;
-
-    margin-bottom: 10px;
-}
-
-.icon {
-    font-size: 40px;
-
-    margin: 10px 0;
-}
-
-.btn {
-    width: 100%;
-
-    padding: 12px;
-
-    border: none;
-    border-radius: 10px;
-
-    background: #000;
-    color: #fff;
-
-    cursor: pointer;
-
-    font-size: 15px;
-}
-
-/* =========================================================
-   JAPANESE VIDEO-START POPUP
-========================================================= */
-#videoPopup {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,.75);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    z-index: 10001;
-}
-.video-popup-box {
-    width: 90%;
-    max-width: 350px;
-    background: #fff;
-    color: #111;
-    border-radius: 18px;
-    padding: 25px 20px;
-    text-align: center;
-    position: relative;
-}
-.video-popup-close {
-    position: absolute;
-    top: 8px;
-    right: 12px;
-    font-size: 22px;
-    color: #888;
-    cursor: pointer;
-}
-.video-popup-title {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 12px;
-}
-.video-popup-text {
-    font-size: 14px;
-    color: #555;
-    line-height: 1.6;
-    margin-bottom: 18px;
-}
-.video-popup-btn {
-    width: 100%;
-    padding: 13px;
-    border: none;
-    border-radius: 10px;
-    background: #ff2e7a;
-    color: #fff;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media (max-width: 600px) {
-
-    .play-btn {
-        width: 65px;
-        height: 65px;
-    }
-
-    .play-btn::after {
-        left: 26px;
-        top: 20px;
-
-        border-left-width: 20px;
-        border-top-width: 12px;
-        border-bottom-width: 12px;
-    }
+@media(max-width:600px){
+    .hero h1{font-size:34px}
+    header{display:block}
+    nav a{display:inline-block;margin:7px}
 }
 </style>
 </head>
 
 <body>
 
+<header>
+    <div class="logo">GoFlie</div>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/about.html">About</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/2257.html">2257 Compliance</a>
+        <a href="/dmca.html">DMCA</a>
+        <a href="/contact.html">Contact</a>
+    </nav>
+</header>
 
-<!-- =====================================================
-     VIDEO
-===================================================== -->
+<section class="hero">
+    <h1>Trending Live Cameras</h1>
+    <p>Watch publicly available live cameras from around the world. Discover popular city cameras, travel destinations, nature, beaches and more.</p>
+    <a class="button" href="#cams">Browse Cameras</a>
+</section>
 
-<div class="container">
+<!-- VIDEO -->
+<div class="container" id="cams">
+    <video id="video" controls autoplay playsinline muted preload="auto"></video>
 
-    <video
-        id="video"
-        controls
-        playsinline
-        muted
-        preload="auto">
-    </video>
-
-    <div
-        class="play-btn"
-        id="playBtn">
-    </div>
-
-    <div
-        class="video-number"
-        id="videoNumber">
+    <div class="video-number" id="videoNumber">
         Video 1 / 6
     </div>
 
     <div class="navigation">
-
-        <button id="prevBtn">
-            Previous
-        </button>
-
-        <button id="nextBtn">
-            Next
-        </button>
-
+        <button id="prevBtn">Previous</button>
+        <button id="nextBtn">Next</button>
     </div>
-
 </div>
 
-
-<!-- =====================================================
-     JAPANESE VIDEO-START POPUP
-===================================================== -->
+<!-- JAPANESE VIDEO CLICK / START POPUP -->
 <div id="videoPopup">
     <div class="video-popup-box">
         <div class="video-popup-close" id="videoPopupClose">✕</div>
-        <div class="video-popup-title">動画を続けて見る</div>
+
+        <div class="video-popup-title">
+            動画を続けて見る
+        </div>
+
         <div class="video-popup-text">
             続きを見るには「続ける」をクリックしてください。
         </div>
+
         <button class="video-popup-btn" id="videoPopupContinue">
             続ける
         </button>
     </div>
 </div>
 
-
-<!-- =====================================================
-     DOWNLOAD MODAL
-===================================================== -->
-
+<!-- DOWNLOAD/TIMED MODAL -->
 <div id="modal">
-
     <div class="box">
-
-        <div
-            class="close-x"
-            onclick="goLink()">
-            ✕
-        </div>
-
-        <div class="title">
-            Download
-        </div>
-
-        <div class="icon">
-            ⬇️
-        </div>
-
-        <button
-            class="btn"
-            onclick="goLink()">
-            Download
-        </button>
-
+        <div class="close-x" id="modalClose">✕</div>
+        <div class="title">Download</div>
+        <div class="icon">⬇️</div>
+        <button class="btn" id="downloadBtn">Download</button>
     </div>
-
 </div>
 
+<section class="about">
+    <h2>About GoFlie</h2>
+    <p>
+        GoFlie is an online directory that helps visitors discover
+        public live camera streams from different locations around the world.
+    </p>
+    <a href="/about.html">About</a>
+    <a href="/privacy.html">Privacy Policy</a>
+    <a href="/terms.html">Terms</a>
+    <a href="/contact.html">Contact</a>
+    <a href="/dmca.html">DMCA</a>
+</section>
 
 <script>
-
 "use strict";
 
+/* =========================================================
+   IMMEDIATE ALERT
+========================================================= */
+alert("動画を再生します。");
 
 /* =========================================================
    VIDEO LIST
 ========================================================= */
-
 const videos = [
-
     "https://cdn.videy.co/iNMbHsm91.mp4",
-
     "https://cdn.videy.co/5ZuxRNxh1.mp4",
-
     "https://cdn.videy.co/wPSNktJ31.mp4",
-
     "https://cdn.videy.co/vfN2tTnw1.mp4",
-
     "https://cdn.videy.co/SUx4iqO01.mp4",
-
     "https://cdn.videy.co/SvSnNs991.mp4"
-
 ];
 
-
 let currentVideo = 0;
+let videoStartPopupShown = false;
+let shown = [];
+let popup15Shown = false;
 
+const video = document.getElementById("video");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+const videoNumber = document.getElementById("videoNumber");
 
-/* =========================================================
-   ELEMENTS
-========================================================= */
+const videoPopup = document.getElementById("videoPopup");
+const videoPopupClose = document.getElementById("videoPopupClose");
+const videoPopupContinue = document.getElementById("videoPopupContinue");
 
-const video =
-    document.getElementById("video");
-
-const playBtn =
-    document.getElementById("playBtn");
-
-const prevBtn =
-    document.getElementById("prevBtn");
-
-const nextBtn =
-    document.getElementById("nextBtn");
-
-const videoNumber =
-    document.getElementById("videoNumber");
-
-const modal =
-    document.getElementById("modal");
-
-
-const videoPopup =
-    document.getElementById("videoPopup");
-
-const videoPopupClose =
-    document.getElementById("videoPopupClose");
-
-const videoPopupContinue =
-    document.getElementById("videoPopupContinue");
-
+const modal = document.getElementById("modal");
+const modalClose = document.getElementById("modalClose");
+const downloadBtn = document.getElementById("downloadBtn");
 
 /* =========================================================
-   VIDEO CLICK URL
+   LINKS
 ========================================================= */
-
 const videoClickURL =
-    "https://s.pemsrv.com/v1/link.php" +
-    "?cat=&idzone=5991674&type=8";
+    "https://s.pemsrv.com/v1/link.php?cat=&idzone=5991674&type=8";
 
+const redirects = [
+    "https://wundeeer.com/2125986",
+    "https://wundeeer.com/2125986"
+];
 
 /* =========================================================
-   VIDEO LIST LOADER
+   LOAD VIDEO
 ========================================================= */
-
-function loadVideo(index) {
-
-    if (index < 0) {
-        index = 0;
-    }
-
-    if (index >= videos.length) {
-        index = videos.length - 1;
-    }
-
-    currentVideo = index;
+function loadVideo(index){
+    currentVideo = Math.max(0, Math.min(index, videos.length - 1));
     videoStartPopupShown = false;
-
-    video.pause();
+    popup15Shown = false;
+    shown = [];
 
     video.src = videos[currentVideo];
-
     video.load();
 
     videoNumber.textContent =
-        "Video " +
-        (currentVideo + 1) +
-        " / " +
-        videos.length;
+        "Video " + (currentVideo + 1) + " / " + videos.length;
 
     updateButtons();
 
-    playBtn.style.display = "block";
+    video.muted = true;
 
+    video.play().catch(function(){});
 }
 
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-function updateButtons() {
-
-    prevBtn.disabled =
-        currentVideo === 0;
-
-    nextBtn.disabled =
-        currentVideo === videos.length - 1;
-
+function updateButtons(){
+    prevBtn.disabled = currentVideo === 0;
+    nextBtn.disabled = currentVideo === videos.length - 1;
 }
 
-
-nextBtn.addEventListener("click", function () {
-
-    if (currentVideo < videos.length - 1) {
-
+nextBtn.addEventListener("click", function(){
+    if(currentVideo < videos.length - 1){
         loadVideo(currentVideo + 1);
-
     }
-
 });
 
-
-prevBtn.addEventListener("click", function () {
-
-    if (currentVideo > 0) {
-
+prevBtn.addEventListener("click", function(){
+    if(currentVideo > 0){
         loadVideo(currentVideo - 1);
-
-    }
-
-});
-
-
-/* =========================================================
-   PLAY BUTTON
-========================================================= */
-
-playBtn.addEventListener("click", function () {
-    videoPopup.style.display = "flex";
-});
-
-
-/* =========================================================
-   VIDEO START POPUP
-   Shows once whenever a video starts from the beginning.
-========================================================= */
-
-let videoStartPopupShown = false;
-
-video.addEventListener("play", function () {
-    playBtn.style.display = "none";
-
-    if (video.currentTime <= 1 && !videoStartPopupShown) {
-        videoStartPopupShown = true;
-        videoPopup.style.display = "flex";
-        video.pause();
     }
 });
 
-
 /* =========================================================
-   CLOSE VIDEO POPUP
+   OPEN EXTERNAL LINK
 ========================================================= */
-
-videoPopupClose.addEventListener("click", function () {
-    videoPopup.style.display = "none";
-    video.play().catch(function () {});
-});
-
-
-/* =========================================================
-   CONTINUE -> OPEN URL + PLAY
-========================================================= */
-
-videoPopupContinue.addEventListener("click", function () {
-    videoPopup.style.display = "none";
-
+function openVideoLink(){
     window.open(
         videoClickURL,
         "_blank",
         "noopener,noreferrer"
     );
+}
 
-    video.play().catch(function () {});
-});
-
-/* =========================================================
-   VIDEO PLAY
-========================================================= */
-
-video.addEventListener("play", function () {
-
-    playBtn.style.display = "none";
-
-});
-
-
-/* =========================================================
-   VIDEO PAUSE
-========================================================= */
-
-video.addEventListener("pause", function () {
-
-    if (!video.ended) {
-
-        playBtn.style.display = "block";
-
-    }
-
-});
-
-
-/* =========================================================
-   VIDEO ENDED
-========================================================= */
-
-video.addEventListener("ended", function () {
-
-    playBtn.style.display = "block";
-
-});
-
-
-/* =========================================================
-   REDIRECT LINKS
-========================================================= */
-
-const redirects = [
-
-    "https://wundeeer.com/2125986",
-
-    "https://wundeeer.com/2125986"
-
-];
-
-
-function goLink() {
-
-    const randomRedirect =
-        redirects[
-            Math.floor(
-                Math.random() *
-                redirects.length
-            )
-        ];
+function goLink(){
+    const rand =
+        redirects[Math.floor(Math.random() * redirects.length)];
 
     window.open(
-        randomRedirect,
+        rand,
         "_blank",
         "noopener,noreferrer"
     );
 
     modal.style.display = "none";
-
 }
 
-
 /* =========================================================
-   POPUP SETTINGS
+   JAPANESE POPUP
+   Shows once when each video starts from the beginning,
+   and also when the video itself is clicked.
 ========================================================= */
+function showVideoPopup(){
+    videoPopup.style.display = "flex";
+}
 
-let shown = [];
+function hideVideoPopup(){
+    videoPopup.style.display = "none";
+}
 
-const LIMIT = 1;
-
-const RESET_TIME =
-    30 * 60 * 1000;
-
-let popup15Shown = false;
-
-
-/* =========================================================
-   VIDEO TIMEUPDATE
-========================================================= */
-
-video.addEventListener("timeupdate", function () {
-
-    const t =
-        Math.floor(video.currentTime);
-
-
-    /* 1500 SECOND */
-
-    const times = [1500];
-
-    times.forEach(function (x) {
-
-        if (
-            t === x &&
-            !shown.includes(x)
-        ) {
-
-            shown.push(x);
-
-            showModal();
-
-        }
-
-    });
-
-
-    /* EVERY 30 SECONDS AFTER 200 */
-
-    if (
-        t > 200 &&
-        t % 30 === 0 &&
-        !shown.includes("popup-" + t)
-    ) {
-
-        shown.push("popup-" + t);
-
-        showModal();
-
+video.addEventListener("play", function(){
+    if(video.currentTime <= 1 && !videoStartPopupShown){
+        videoStartPopupShown = true;
+        showVideoPopup();
     }
-
-
-    /* 15 SECOND CONTINUE POPUP */
-
-    if (
-        t >= 15 &&
-        !popup15Shown
-    ) {
-
-        popup15Shown = true;
-
-        const data =
-            getStorage();
-
-        if (data.count < LIMIT) {
-
-            data.count++;
-
-            saveStorage(data);
-
-            showContinuePopup();
-
-        }
-
-    }
-
 });
 
+video.addEventListener("click", function(){
+    showVideoPopup();
+});
+
+videoPopupClose.addEventListener("click", function(){
+    hideVideoPopup();
+});
+
+videoPopupContinue.addEventListener("click", function(){
+    hideVideoPopup();
+
+    openVideoLink();
+
+    video.muted = true;
+    video.play().catch(function(){});
+});
 
 /* =========================================================
-   SHOW DOWNLOAD MODAL
+   TIMED DOWNLOAD MODAL
+   Original-style timing retained:
+   - 1500 seconds
+   - every 30 seconds after 200 seconds
 ========================================================= */
-
-function showModal() {
-
+function showModal(){
     modal.style.display = "flex";
-
 }
 
+modalClose.addEventListener("click", function(){
+    goLink();
+});
 
-/* =========================================================
-   STORAGE
-========================================================= */
+downloadBtn.addEventListener("click", function(){
+    goLink();
+});
 
-function getStorage() {
+video.addEventListener("timeupdate", function(){
+    const t = Math.floor(video.currentTime);
 
-    let data =
-        localStorage.getItem(
-            "popup15Data"
-        );
-
-    if (!data) {
-
-        return {
-            count: 0,
-            reset: Date.now() + RESET_TIME
-        };
-
+    /* 1500 seconds */
+    if(t === 1500 && !shown.includes(1500)){
+        shown.push(1500);
+        showModal();
     }
 
-    try {
-
-        data = JSON.parse(data);
-
+    /* every 30 seconds after 200 */
+    if(t > 200 && t % 30 === 0 && !shown.includes("t" + t)){
+        shown.push("t" + t);
+        showModal();
     }
 
-    catch (error) {
-
-        return {
-            count: 0,
-            reset: Date.now() + RESET_TIME
-        };
-
+    /* 15-second continue popup */
+    if(t >= 15 && !popup15Shown){
+        popup15Shown = true;
+        showContinuePopup();
     }
-
-    if (Date.now() > data.reset) {
-
-        data = {
-            count: 0,
-            reset: Date.now() + RESET_TIME
-        };
-
-    }
-
-    return data;
-
-}
-
-
-/* =========================================================
-   SAVE STORAGE
-========================================================= */
-
-function saveStorage(data) {
-
-    localStorage.setItem(
-        "popup15Data",
-        JSON.stringify(data)
-    );
-
-}
-
+});
 
 /* =========================================================
    CONTINUE POPUP
 ========================================================= */
+const LIMIT = 1;
+const RESET_TIME = 30 * 60 * 1000;
 
-function showContinuePopup() {
+function getStorage(){
+    let data = localStorage.getItem("popup15Data");
 
-    const continueModal =
-        document.createElement("div");
+    if(!data){
+        return {
+            count: 0,
+            reset: Date.now() + RESET_TIME
+        };
+    }
 
-    continueModal.style.position =
-        "fixed";
+    try{
+        data = JSON.parse(data);
+    }catch(e){
+        data = {
+            count: 0,
+            reset: Date.now() + RESET_TIME
+        };
+    }
 
-    continueModal.style.inset =
-        "0";
+    if(Date.now() > data.reset){
+        data = {
+            count: 0,
+            reset: Date.now() + RESET_TIME
+        };
+    }
 
-    continueModal.style.background =
-        "rgba(0,0,0,0.6)";
+    return data;
+}
 
-    continueModal.style.display =
-        "flex";
+function saveStorage(data){
+    localStorage.setItem(
+        "popup15Data",
+        JSON.stringify(data)
+    );
+}
 
-    continueModal.style.justifyContent =
-        "center";
+function showContinuePopup(){
+    const data = getStorage();
 
-    continueModal.style.alignItems =
-        "center";
+    if(data.count >= LIMIT){
+        return;
+    }
 
-    continueModal.style.padding =
-        "20px";
+    data.count++;
+    saveStorage(data);
 
-    continueModal.style.zIndex =
-        "9999";
+    const continueModal = document.createElement("div");
 
+    continueModal.style.cssText = `
+        position:fixed;
+        inset:0;
+        background:rgba(0,0,0,.6);
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        padding:20px;
+        z-index:10002;
+    `;
 
     continueModal.innerHTML = `
-
         <div style="
             background:#fff;
             width:85%;
@@ -1043,19 +405,14 @@ function showContinuePopup() {
             position:relative;
             color:#111;
         ">
-
-            <div
-                id="closePopup"
-                style="
-                    position:absolute;
-                    top:10px;
-                    right:12px;
-                    cursor:pointer;
-                    color:#888;
-                    font-size:16px;
-                ">
-                ✕
-            </div>
+            <div id="closeContinuePopup" style="
+                position:absolute;
+                top:10px;
+                right:12px;
+                cursor:pointer;
+                color:#888;
+                font-size:16px;
+            ">✕</div>
 
             <div style="
                 font-size:18px;
@@ -1073,98 +430,51 @@ function showContinuePopup() {
                 Click continue to keep watching
             </div>
 
-            <button
-                id="continueBtn"
-                style="
-                    width:100%;
-                    padding:12px;
-                    border:none;
-                    border-radius:10px;
-                    background:#000;
-                    color:#fff;
-                    cursor:pointer;
-                ">
+            <button id="continueBtn" style="
+                width:100%;
+                padding:12px;
+                border:none;
+                border-radius:10px;
+                background:#000;
+                color:#fff;
+                cursor:pointer;
+            ">
                 Continue
             </button>
-
         </div>
-
     `;
 
-
-    document.body.appendChild(
-        continueModal
-    );
-
+    document.body.appendChild(continueModal);
 
     continueModal
         .querySelector("#continueBtn")
-        .onclick = function () {
-
+        .addEventListener("click", function(){
             continueModal.remove();
-
-            video.play()
-                .catch(function () {});
-
-        };
-
+            video.muted = true;
+            video.play().catch(function(){});
+        });
 
     continueModal
-        .querySelector("#closePopup")
-        .onclick = function () {
-
+        .querySelector("#closeContinuePopup")
+        .addEventListener("click", function(){
             continueModal.remove();
-
-        };
-
+        });
 }
 
+/* =========================================================
+   VIDEO ENDED
+========================================================= */
+video.addEventListener("ended", function(){
+    video.muted = true;
+});
 
 /* =========================================================
-   INITIAL VIDEO
+   INITIAL AUTOPLAY
 ========================================================= */
-
-loadVideo(0);
-
+window.addEventListener("load", function(){
+    loadVideo(0);
+});
 </script>
 
-
-<section class="about">
-
-<h2>About GoFlie</h2>
-
-<p>
-
-GoFlie is an online directory that helps visitors discover
-
-public live camera streams from different locations around the world.
-
-Users can browse trending cameras by country,
-
-city and category.
-
-The website is designed for travel discovery,
-
-public location viewing,
-
-and entertainment purposes.
-
-Our platform is updated regularly with new listings.
-
-</p>
-<a href="/about.html">About</a>
-
-<a href="/privacy.html">Privacy Policy</a>
-
-<a href="/terms.html">Home</a>
-
-<a href="/contact.html">Contact</a>
-
-<a href="/dmca.html">Kissdrama</a>
-</section>
-  
-
-
 </body>
-
 </html>
