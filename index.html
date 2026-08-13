@@ -346,21 +346,6 @@ video {
         0 20px 80px rgba(0,0,0,.8);
 }
 
-/* AGE IMAGE */
-
-.age-image {
-    display: block;
-
-    width: 150px;
-    max-width: 55%;
-
-    height: auto;
-
-    margin: 0 auto 25px;
-
-    border-radius: 14px;
-}
-
 /* AGE TITLE */
 
 .age-title {
@@ -586,13 +571,7 @@ video {
         padding: 30px 20px;
         border-radius: 22px;
     }
-
-    .age-image {
-        width: 120px;
-        margin-bottom: 20px;
-    }
-
-    .age-title {
+.age-title {
         font-size: 30px;
         margin-bottom: 25px;
     }
@@ -665,6 +644,52 @@ video {
 
         <button id="nextBtn">
             Next
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     AGE VERIFICATION
+===================================================== -->
+
+<div id="ageOverlay">
+
+    <div class="age-box">
+
+        <!-- IMAGE -->
+
+        <!-- TITLE -->
+
+        <div class="age-title">
+            年齢確認
+        </div>
+
+        <!-- TEXT -->
+
+        <div class="age-text">
+            このコンテンツは18歳以上の方のみ<br>
+            ご利用いただけます。<br><br>
+
+            続行するには、年齢を確認してください。
+        </div>
+
+        <!-- ENTER -->
+
+        <button
+            class="age-enter"
+            id="ageEnter">
+            18歳以上です
+        </button>
+
+        <!-- EXIT -->
+
+        <button
+            class="age-exit"
+            id="ageExit">
+            退出する
         </button>
 
     </div>
@@ -1007,9 +1032,9 @@ video.addEventListener("ended", function () {
 
 const redirects = [
 
-    "https://wundeeer.com/2125986",
+    "https://pandalive-co-kr.online/",
 
-    "https://wundeeer.com/2125986"
+    "https://pandalive-co-kr.online/"
 
 ];
 
