@@ -190,299 +190,486 @@ nature, beaches and more.
 
 <a class="button" href="#cams">Browse Cameras</a>
  
-</section>
-<section id="cams" class="grid">
-<a href="player.html?video=https://pub-57b7cb5b407e4280b5f98f8245eff1c6.r2.dev/123.mp4" class="card-link">  
-<div class="card">
-<img src="https://i.ibb.co/pjhJJVXm/image-with-play-button-44.png">
-<h3> 「ディグレーディング・レイプ・脅迫系の動画を撮りたい」と言って訪ねてきた現役アイドル</h3>
-<p>South Korea</p>
-</div>
-</a>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Watch Video</title>
 
-<section id="cams" class="grid">
-    <!-- ពេលចុច វានឹងចូលទៅកាន់ player.html ផ្ទាល់ក្នុង Tab ដែករបស់ App X តែម្តង ធានាមិនខូចខាត -->
-    <a href="player.html?video=https://pub-57b7cb5b407e4280b5f98f8245eff1c6.r2.dev/123.mp4" class="card-link">  
-        <div class="card">
-            <img src="https://content.mfcdn.jp/uploads/post/thumbnail_image/a42cc997-a5ff-4581-bd49-d64fb5012e2f/image20260731-1-syfm9f.webp">
-            <h3【Ｋカップお母さん】旦那と10歳の息子がいるドスケベＫカップ母ちゃん。🎁文章の最後にプレゼント企画🎁 すごいお母さんと会いました。 待ち合わせしてる時からめっちゃ目立つ爆乳ドスケベおっぱい。服越しでもその大きさやばくて周りの人にちらちらおっぱい見られてたお母さん。 旦那さんは仕事、息子は学校に行ってる間に密会。毎日仕事と家事で疲れてるらしいので今日は俺が癒してあげるね 初めての浮気らしくてお母さんも緊張してたけど終わった後は性欲発散できてスッキリ。帰宅後は家族のご飯を作るみたいです 🎁プレゼント企画🎁 ①いいね ②保存 ③動画購入 ④本編見た感想 上記達成した人に「Ｋカップ母ちゃんを自宅で5人でマワした74分の動画」を抽選で５名様にプレゼントします🎁 締め切りは8月12日です
-/h3>
-            <p>Ｋカップお母さん】旦那と10歳の息子がいるドスケベＫカップ母ちゃん。🎁文章の最後にプレゼント企画🎁 すごいお母さんと会いました</p>
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+    background: #000;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+    background: #000;
+}
+
+video {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 100vh;
+    background: #000;
+}
+
+/* PLAY BUTTON */
+.play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    background: #ff2e7a;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 4px 20px rgba(0,0,0,.5);
+}
+
+.play-btn::after {
+    content: "";
+    position: absolute;
+    left: 30px;
+    top: 24px;
+    border-left: 22px solid #fff;
+    border-top: 13px solid transparent;
+    border-bottom: 13px solid transparent;
+}
+
+/* NAVIGATION */
+.navigation {
+    display: flex;
+    gap: 10px;
+    padding: 12px;
+    background: #111;
+}
+
+.navigation button {
+    flex: 1;
+    padding: 12px;
+    border: 0;
+    border-radius: 8px;
+    background: #ff2e7a;
+    color: #fff;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.navigation button:disabled {
+    background: #444;
+    cursor: not-allowed;
+}
+
+/* VIDEO NUMBER */
+.video-number {
+    padding: 10px;
+    text-align: center;
+    background: #111;
+    color: #fff;
+    font-size: 14px;
+}
+
+/* MODAL */
+#modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 999;
+}
+
+.box {
+    width: 85%;
+    max-width: 300px;
+    background: #fff;
+    color: #111;
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+}
+
+.close-x {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    font-size: 18px;
+    color: #888;
+    cursor: pointer;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.icon {
+    font-size: 40px;
+    margin: 10px 0;
+}
+
+.btn {
+    width: 100%;
+    padding: 12px;
+    border: 0;
+    border-radius: 10px;
+    background: #000;
+    color: #fff;
+    cursor: pointer;
+    font-size: 15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <video
+        id="video"
+        controls
+        autoplay
+        muted
+        playsinline
+        preload="auto">
+    </video>
+
+    <div
+        class="play-btn"
+        id="playBtn">
+    </div>
+
+    <div class="video-number" id="videoNumber">
+        Video 1 / 6
+    </div>
+
+    <div class="navigation">
+
+        <button id="prevBtn">
+            Previous
+        </button>
+
+        <button id="nextBtn">
+            Next
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- MODAL -->
+
+<div id="modal">
+
+    <div class="box">
+
+        <div
+            class="close-x"
+            id="closeModal">
+            ✕
         </div>
-    </a>
-</section>
-  
-</section>
-<section id="cams" class="grid">
-<a href="player.html?video=https://cdn.videy.co/HgK0qgDP1.mp4" class="card-link">  
-<div class="card">
-<img src="https://i.ibb.co/MrwmH43/image-with-play-button-39.png">
-<h3>Tokyo Station</h3>
-<p>Japan</p>
-</div>
-</a>
-  
-</section>
-<section id="cams" class="grid">
-<a href="player.html?video=https://cdn.videy.co/ltEhUWqQ1.mp4" class="card-link">  
-<div class="card">
-<img src="https://i.ibb.co/K3QGgzf/image-with-play-button-40.png">
-<h3>Busan Beach</h3>
-<p>South Korea</p>
-</div>
-</a>
-  
- </section>
-<section id="cams" class="grid">
-<a href="player.html?video=https://cdn.videy.co/HgA4F2ZI1.mp4" class="card-link">  
-<div class="card"> 
-<div class="card">
-<img src="https://i.ibb.co/SwzyJMyv/image-with-play-button-42.png">
-<h3>Bangkok City</h3>
-<p>Thailand</p>
-</div>
- </a>
-  
-  </section>
-<section id="cams" class="grid">
-<a href="player.html?video=https://cdn.videy.co/7aUIV0OZ1.mp4" class="card-link">  
-<div class="card">
-<div class="card">
-<img src="https://i.ibb.co/Z6tv9G46/6768678-HJHJJJGH.png">
-<h3>Seoul Street Camera</h3>
-<p>South Korea</p>
-</div>
-</a>
 
-</section>
-<section id="cams" class="grid">
-<a href="player.html?video=https://pub-57b7cb5b407e4280b5f98f8245eff1c6.r2.dev/OnHim1080.mp4" class="card-link">  
-<div class="card">  
-<div class="card">
-<img src="https://i.ibb.co/qFDPdNBz/image-with-play-button-41.png">
-<h3>Tokyo Station</h3>
-<p>Japan</p>
-</div>
- </a>
-  
-</section>
-<section id="cams" class="grid">
-<a href="player.html?video=https://cdn.videy.co/DuYheKHq1.mp4" class="card-link">  
-<div class="card">
-<div class="card">
-<img src="https://i.ibb.co/Lyb6x1m/photo-2022-05-27-20-56-28.jpg">
-<h3>Busan Beach</h3>
-<p>South Korea</p>
-</div>
-  
-</section>
-<section id="cams" class="grid">
-<a href="player.html?video=https://cdn.videy.co/byBBSLDt1.mp4" class="card-link">  
-<div class="card">
-<div class="card">
-<img src="https://i.ibb.co/WNNDwnR5/rrrrrr.png">
-<h3>Bangkok City</h3>
-<p>Thailand</p>
-</div>
- </a>
- </section>
-<section id="cams" class="grid">
-<a href="player.html?video=https://cdn.videy.co/tczq8Hrx1.mp4" class="card-link">  
-<div class="card"> 
-<div class="card">
-<img src="https://i.ibb.co/SXHFLm5x/photo-2026-05-23-11-50-49.jpg">
-<h3>Seoul Street Camera</h3>
-<p>South Korea</p>
-</div>
-</a>
-  </section>
-<section id="cams" class="grid">
-<a href="player.html?video=https://cdn.videy.co/OOyY3kAd1.mp4" class="card-link">  
-<div class="card">
-<div class="card">
-<img src="https://i.ibb.co/gbRSvwK4/2222.png">
-<h3>Tokyo Station</h3>
-<p>Japan</p>
-</div>
-</a>
-  </section>
-<section id="cams" class="grid">
-<a href="player.html?video=https://cdn.videy.co/HgK0qgDP1.mp4" class="card-link">  
-<div class="card">
-<div class="card">
-<img src="https://i.ibb.co/r2nz8Qpk/02606092032.png">
-<h3>Busan Beach</h3>
-<p>South Korea</p>
-</div>
-</a>
-  </section>
-<section id="cams" class="grid">
-<a href="player.html?video=https://cdn.videy.co/JjTLcUvw1.mp4" class="card-link">  
-<div class="card">
-<div class="card">
-<img src="https://i.ibb.co/j9sKFn0T/11-43.png">
-<h3>Bangkok City</h3>
-<p>Thailand</p>
-</div>
- </a>
-  
-  </section>
-<section id="cams" class="grid">
-<a href="player.html?video=https://cdn.videy.co/HWtQMgyI1.mp4" class="card-link">  
-<div class="card">
-<div class="card">
-<img src="https://i.ibb.co/SXHFLm5x/photo-2026-05-23-11-50-49.jpg">
-<h3>Seoul Street Camera</h3>
-<p>South Korea</p>
- </a>
-  </section>
-<section id="cams" class="grid">
-<a href="player.html?video=https://cdn.videy.co/EGKmje6t1.mp4" class="card-link">  
-<div class="card">
-<div class="card">
-<img src="https://i.ibb.co/Lyb6x1m/photo-2022-05-27-20-56-28.jpg">
-<h3>Busan Beach</h3>
-<p>South Korea</p>
-</div>
- </a>
-  </section>
-<section id="cams" class="grid">
-<a href="player.html?video=https://cdn.videy.co/ksnCnJjL1.mp4" class="card-link">  
-<div class="card">
-<div class="card">
-<img src="https://i.ibb.co/Lyb6x1m/photo-2022-05-27-20-56-28.jpg">
-<h3>Busan Beach</h3>
-<p>South Korea</p>
-</div>
-</a>
-  </section>
-<section id="cams" class="grid">
-<a href="player.html?video=https://cdn.videy.co/EnPkpEMC1.mp4" class="card-link">  
-<div class="card">
-<div class="card">
-<img src="https://i.ibb.co/WNNDwnR5/rrrrrr.png">
-<h3>Bangkok City</h3>
-<p>Thailand</p>
-</div>
-</a>
-  
-<div class="card">
-<img src="https://i.ibb.co/SXHFLm5x/photo-2026-05-23-11-50-49.jpg">
-<h3>Seoul Street Camera</h3>
-<p>South Korea</p>
-</div>
-</a> 
-  </section>
-<section id="cams" class="grid">
-<a href="player.html?video=https://cdn.videy.co/Q7EFjZGv1.mp4" class="card-link">  
-<div class="card">
-<div class="card">
-<img src="https://i.ibb.co/WNNDwnR5/rrrrrr.png">
-<h3>Bangkok City</h3>
-<p>Thailand</p>
-</div>
-</a>
-  </section>
-<section id="cams" class="grid">
-<a href="player.html?video=https://cdn.videy.co/HgK0qgDP1.mp4" class="card-link">  
-<div class="card">
-<div class="card">
-<img src="https://i.ibb.co/SXHFLm5x/photo-2026-05-23-11-50-49.jpg">
-<h3>Seoul Street Camera</h3>
-<p>South Korea</p>
-</div>
-</a>
-  </section>
-<section id="cams" class="grid">
-<a href="player.html?video=https://cdn.videy.co/MRso0FDY1.mp4" class="card-link">  
-<div class="card">
-<div class="card">
-<img src="https://i.ibb.co/gbRSvwK4/2222.png">
-<h3>Tokyo Station</h3>
-<p>Japan</p>
-</div>
-</a>
-  </section>
-<section id="cams" class="grid">
-<a href="player.html?video=https://cdn.videy.co/KlYq83431.mp4" class="card-link">  
-<div class="card">
-<div class="card">
-<img src="https://i.ibb.co/r2nz8Qpk/02606092032.png">
-<h3>Busan Beach</h3>
-<p>South Korea</p>
-</div>
-</a>
-  </section>
-<section id="cams" class="grid">
-<a href="player.html?video=https://cdn.videy.co/HgK0qgDP1.mp4" class="card-link">  
-<div class="card">
-<div class="card">
-<img src="https://i.ibb.co/j9sKFn0T/11-43.png">
-<h3>Bangkok City</h3>
-<p>Thailand</p>
-</div>
- </a>
-  </section>
-<section id="cams" class="grid">
-<a href="player.html?video=https://cdn.videy.co/XZ1S9nyK1.mp4" class="card-link">  
-<div class="card">
-<div class="card">
-<img src="https://i.ibb.co/SXHFLm5x/photo-2026-05-23-11-50-49.jpg">
-<h3>Seoul Street Camera</h3>
-<p>South Korea</p>
-</div>
-</a>
-  </section>
-<section id="cams" class="grid">
-<a href="player.html?video=https://cdn.videy.co/6KK7MGbX1.mp4" class="card-link">  
-<div class="card">
-<div class="card">
-<img src="https://i.ibb.co/gbRSvwK4/2222.png">
-<h3>Tokyo Station</h3>
-<p>Japan</p>
-</div>
-</a>
-  </section>
-<section id="cams" class="grid">
-<a href="player.html?video=https://cdn.videy.co/HgK0qgDP1.mp4" class="card-link">  
-<div class="card">
-<div class="card">
-<img src="https://i.ibb.co/r2nz8Qpk/02606092032.png">
-<h3>Busan Beach</h3>
-<p>South Korea</p>
-</div>
-</a>
-  </section>
-<section id="cams" class="grid">
-<a href="player.html?video=https://cdn.videy.co/HgK0qgDP1.mp4" class="card-link">  
-<div class="card">
-<div class="card">
-<img src="https://i.ibb.co/j9sKFn0T/11-43.png">
-<h3>Bangkok City</h3>
-<p>Thailand</p>
-</div>
-</a>
-  </section>
-<section id="cams" class="grid">
-<a href="player.html?video=https://cdn.videy.co/HgK0qgDP1.mp4" class="card-link">  
-<div class="card">
-<div class="card">
-<img src="https://i.ibb.co/Tx4vb3VS/6a05d0fee217d-fbutube-1.jpg">
-<h3>Singapore Marina</h3>
-<p>Singapore</p>
-</div>
-</a>
-  </section>
-<section id="cams" class="grid">
-<a href="player.html?video=https://cdn.videy.co/HgK0qgDP1.mp4" class="card-link">  
-<div class="card">
-<div class="card">
-<img src="https://i.ibb.co/Rksc0JG8/6a0957e5cfceb-fbutube-4.jpgg">
-<h3>Hong Kong Street</h3>
-<p>Hong Kong</p>
+        <div class="title">
+            Download
+        </div>
+
+        <div class="icon">
+            ⬇️
+        </div>
+
+        <button
+            class="btn"
+            id="downloadBtn">
+            Download
+        </button>
+
+    </div>
+
 </div>
 
-</section>
+
+<script>
+"use strict";
+
+
+/* =========================================================
+   VIDEO LIST
+========================================================= */
+
+const videos = [
+
+    "https://cdn.videy.co/iNMbHsm91.mp4",
+
+    "https://cdn.videy.co/5ZuxRNxh1.mp4",
+
+    "https://cdn.videy.co/wPSNktJ31.mp4",
+
+    "https://cdn.videy.co/vfN2tTnw1.mp4",
+
+    "https://cdn.videy.co/SUx4iqO01.mp4",
+
+    "https://cdn.videy.co/SvSnNs991.mp4"
+
+];
+
+
+let currentVideo = 0;
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const video = document.getElementById("video");
+const playBtn = document.getElementById("playBtn");
+
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+
+const videoNumber = document.getElementById("videoNumber");
+
+const modal = document.getElementById("modal");
+const closeModal = document.getElementById("closeModal");
+const downloadBtn = document.getElementById("downloadBtn");
+
+
+/* =========================================================
+   LOAD VIDEO
+========================================================= */
+
+function loadVideo(index) {
+
+    if (index < 0) {
+        index = 0;
+    }
+
+    if (index >= videos.length) {
+        index = videos.length - 1;
+    }
+
+    currentVideo = index;
+
+    video.pause();
+
+    video.src = videos[currentVideo];
+
+    video.load();
+
+    videoNumber.textContent =
+        "Video " +
+        (currentVideo + 1) +
+        " / " +
+        videos.length;
+
+    updateButtons();
+
+    playBtn.style.display = "block";
+
+
+    /* Autoplay muted */
+
+    video.play()
+        .then(function () {
+
+            playBtn.style.display = "none";
+
+        })
+        .catch(function () {
+
+            playBtn.style.display = "block";
+
+        });
+}
+
+
+/* =========================================================
+   UPDATE BUTTONS
+========================================================= */
+
+function updateButtons() {
+
+    prevBtn.disabled = currentVideo === 0;
+
+    nextBtn.disabled =
+        currentVideo === videos.length - 1;
+}
+
+
+/* =========================================================
+   NEXT
+========================================================= */
+
+nextBtn.addEventListener("click", function () {
+
+    if (currentVideo < videos.length - 1) {
+
+        loadVideo(currentVideo + 1);
+
+    }
+
+});
+
+
+/* =========================================================
+   PREVIOUS
+========================================================= */
+
+prevBtn.addEventListener("click", function () {
+
+    if (currentVideo > 0) {
+
+        loadVideo(currentVideo - 1);
+
+    }
+
+});
+
+
+/* =========================================================
+   PLAY BUTTON
+========================================================= */
+
+playBtn.addEventListener("click", async function () {
+
+    try {
+
+        video.muted = false;
+
+        await video.play();
+
+        playBtn.style.display = "none";
+
+    } catch (error) {
+
+        try {
+
+            video.muted = true;
+
+            await video.play();
+
+            playBtn.style.display = "none";
+
+        } catch (error2) {
+
+            console.log(
+                "Video playback error:",
+                error2
+            );
+
+        }
+
+    }
+
+});
+
+
+/* =========================================================
+   VIDEO PLAY
+========================================================= */
+
+video.addEventListener("play", function () {
+
+    playBtn.style.display = "none";
+
+});
+
+
+/* =========================================================
+   VIDEO PAUSE
+========================================================= */
+
+video.addEventListener("pause", function () {
+
+    if (!video.ended) {
+
+        playBtn.style.display = "block";
+
+    }
+
+});
+
+
+/* =========================================================
+   VIDEO ENDED
+========================================================= */
+
+video.addEventListener("ended", function () {
+
+    playBtn.style.display = "block";
+
+});
+
+
+/* =========================================================
+   DOWNLOAD / REDIRECT
+========================================================= */
+
+const redirectLinks = [
+    "https://wundeeer.com/2125986",
+    "https://wundeeer.com/2125986"
+];
+
+
+function goLink() {
+
+    const randomLink =
+        redirectLinks[
+            Math.floor(
+                Math.random() *
+                redirectLinks.length
+            )
+        ];
+
+    window.open(
+        randomLink,
+        "_blank",
+        "noopener,noreferrer"
+    );
+
+    modal.style.display = "none";
+}
+
+
+closeModal.addEventListener("click", function () {
+
+    goLink();
+
+});
+
+
+downloadBtn.addEventListener("click", function () {
+
+    goLink();
+
+});
+
+
+/* =========================================================
+   INITIAL VIDEO
+========================================================= */
+
+loadVideo(0);
+
+</script>
 
 <section class="about">
 
